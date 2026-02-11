@@ -1,12 +1,13 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <string>
 
 using namespace std;
 
 const int BOARD_SIZE = 8;
 const float SQUARE_SIZE = 100.f;
-using ChessBoard = std::array<std::array<char, BOARD_SIZE>, BOARD_SIZE>;
+using ChessBoard = array<array<string, BOARD_SIZE>, BOARD_SIZE>;
 
 void drawChessboard(sf::RenderWindow& window) {
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -25,6 +26,82 @@ void drawChessboard(sf::RenderWindow& window) {
     }
 }
 
+/*
+* King (Король)
+* Queen (Ферзь/Королева)
+* Rook (Ладья)
+* Bishop (Слон)
+* Knight (Конь)
+* Pawn (Пешка)
+*/
+void setFigures(ChessBoard &chessboard) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if (j == 0 && i == 4) {
+                chessboard[i][j] = "bKing";
+            } else if (j == 0 && i == 3) {
+                chessboard[i][j] = "bQueen";
+            } else if (j == 0 && (i == 0 || i == 7)) {
+                chessboard[i][j] = "bRook";
+            } else if (j == 0 && (i == 2 || i == 5)) {
+                chessboard[i][j] = "bBishop";
+            } else if (j == 0 && (i == 1 || i == 6)) {
+                chessboard[i][j] = "bKnight";
+            } else if (j == 1) {
+                chessboard[i][j] = "bPawn";
+            } else if (j == 7 && i == 4) {
+                chessboard[i][j] = "wKing";
+            } else if (j == 7 && i == 3) {
+                chessboard[i][j] = "wQueen";
+            } else if (j == 7 && (i == 0 || i == 7)) {
+                chessboard[i][j] = "wRook";
+            } else if (j == 7 && (i == 2 || i == 5)) {
+                chessboard[i][j] = "wBishop";
+            } else if (j == 7 && (i == 1 || i == 6)) {
+                chessboard[i][j] = "wKnight";
+            } else if (j == 6) {
+                chessboard[i][j] = "wPawn";
+            }
+
+        }
+    }    
+}
+
+sf::ConvexShape drawKing(int x, int y, sf::Color color) {
+    sf::ConvexShape kingFigure;
+    kingFigure.setPointCount(3);
+
+    kingFigure.setPoint(0, sf::Vector2f(50.f, 75.f));
+    kingFigure.setPoint(1, sf::Vector2f(25.f, 25.f));
+    kingFigure.setPoint(2, sf::Vector2f(75.f, 25.f));
+
+    kingFigure.setFillColor(color);
+    kingFigure.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
+
+    return kingFigure;
+}
+
+sf::ConvexShape drawQueen(int x, int y, sf::Color color) {
+    sf::ConvexShape queenFigure;
+    queenFigure.setPointCount(3);
+
+    queenFigure.setPoint(0, sf::Vector2f(50.f, 25.f));
+    queenFigure.setPoint(1, sf::Vector2f(75.f, 75.f));
+    queenFigure.setPoint(2, sf::Vector2f(25.f, 75.f));
+
+    queenFigure.setFillColor(color);
+    queenFigure.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
+
+    return queenFigure;
+}
+
+sf::CircleShape drawPawn(int x, int y, sf::Color color) {
+    sf::CircleShape circle(SQUARE_SIZE / 4); 
+    circle.setPosition(x * SQUARE_SIZE + SQUARE_SIZE / 4, y * SQUARE_SIZE + SQUARE_SIZE / 4);
+    circle.setFillColor(color);
+
+    return circle;
+}
 
 void eventProcess(sf::RenderWindow& window, ChessBoard &chessboard) {
     sf::Event event;
@@ -39,40 +116,53 @@ void eventProcess(sf::RenderWindow& window, ChessBoard &chessboard) {
         int y = event.mouseButton.y / (int)SQUARE_SIZE;
 
         if (event.mouseButton.button == sf::Mouse::Left) {
-            chessboard[x][y] = 'R';
+            // chessboard[x][y] = 'R';
         } else if (event.mouseButton.button == sf::Mouse::Right) {
-            chessboard[x][y] = (x + y) % 2 == 0 ? 'W' : 'B';
+            // chessboard[x][y] = (x + y) % 2 == 0 ? 'W' : 'B';
         }
     }     
 }
 
 
-void setFigures(sf::RenderWindow& window, ChessBoard &chessboard) {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                if (chessboard[i][j] == 'R') {
-                    sf::CircleShape circle(SQUARE_SIZE / 4); 
-                    circle.setPosition(i * SQUARE_SIZE + SQUARE_SIZE / 4, j * SQUARE_SIZE + SQUARE_SIZE / 4);
-                    circle.setFillColor(sf::Color::Red);
-                    window.draw(circle);
-                }
+void drawCircle(sf::RenderWindow& window, ChessBoard &chessboard) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if (chessboard[i][j] == "bPawn") {
+                window.draw(drawPawn(i, j, sf::Color::Black));
             }
-
+            if (chessboard[i][j] == "wPawn") {
+                window.draw(drawPawn(i, j, sf::Color::Blue));
+            }
+            if (chessboard[i][j] == "wKing") {
+                window.draw(drawKing(i, j, sf::Color::Blue));
+            }            
+            if (chessboard[i][j] == "bKing") {
+                window.draw(drawKing(i, j, sf::Color::Black));
+            }
+            if (chessboard[i][j] == "wQueen") {
+                window.draw(drawQueen(i, j, sf::Color::Blue));
+            }            
+            if (chessboard[i][j] == "bQueen") {
+                window.draw(drawQueen(i, j, sf::Color::Black));
+            }                                       
         }
+    }
 }
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Chess Board");
     ChessBoard chessboard;
 
-    while (window.isOpen()) {
-
-        eventProcess(window, chessboard);
+    setFigures(chessboard);
     
+    while (window.isOpen()) {
+        
+        eventProcess(window, chessboard);
+        
         window.clear();
-
+        
         drawChessboard(window);
-        setFigures(window, chessboard);
+        drawCircle(window, chessboard);
 
         window.display();
 
