@@ -3,10 +3,13 @@
 #include <vector>
 #include <string>
 
+#include "constants.hpp"
+#include "figures.hpp"
+
 using namespace std;
 
-const int BOARD_SIZE = 8;
-const float SQUARE_SIZE = 100.f;
+// const int BOARD_SIZE = 8;
+// const float SQUARE_SIZE = 100.f;
 using ChessBoard = array<array<string, BOARD_SIZE>, BOARD_SIZE>;
 
 void drawChessboard(sf::RenderWindow& window) {
@@ -67,20 +70,20 @@ void setFigures(ChessBoard &chessboard) {
     }    
 }
 
-sf::ConvexShape drawKnight(int x, int y, sf::Color color) {
-    sf::ConvexShape KnightFigure;
-    KnightFigure.setPointCount(4);
+// sf::ConvexShape drawKnight(int x, int y, sf::Color color) {
+//     sf::ConvexShape KnightFigure;
+//     KnightFigure.setPointCount(4);
 
-    KnightFigure.setPoint(0, sf::Vector2f(35.f, 20.f));
-    KnightFigure.setPoint(1, sf::Vector2f(65.f, 20.f));
-    KnightFigure.setPoint(2, sf::Vector2f(65.f, 80.f));
-    KnightFigure.setPoint(3, sf::Vector2f(35.f, 80.f));
+//     KnightFigure.setPoint(0, sf::Vector2f(35.f, 20.f));
+//     KnightFigure.setPoint(1, sf::Vector2f(65.f, 20.f));
+//     KnightFigure.setPoint(2, sf::Vector2f(65.f, 80.f));
+//     KnightFigure.setPoint(3, sf::Vector2f(35.f, 80.f));
 
-    KnightFigure.setFillColor(color);
-    KnightFigure.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
+//     KnightFigure.setFillColor(color);
+//     KnightFigure.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
 
-    return KnightFigure;
-}
+//     return KnightFigure;
+// }
 
 sf::ConvexShape drawRook(int x, int y, sf::Color color) {
     sf::ConvexShape RookFigure;
@@ -193,9 +196,9 @@ void drawCircle(sf::RenderWindow& window, ChessBoard &chessboard) {
             } else if (chessboard[i][j] == "bBishop") {
                 window.draw(drawBishop(i, j, sf::Color::Black));
             } else if (chessboard[i][j] == "wKnight") {
-                window.draw(drawKnight(i, j, sf::Color::Blue));
+                window.draw(Figures::drawKnight(i, j, sf::Color::Blue));
             } else if (chessboard[i][j] == "bKnight") {
-                window.draw(drawKnight(i, j, sf::Color::Black));
+                window.draw(Figures::drawKnight(i, j, sf::Color::Black));
             }                                                                            
         }
     }
