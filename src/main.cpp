@@ -12,7 +12,7 @@ using namespace std;
 // const float SQUARE_SIZE = 100.f;
 using ChessBoard = array<array<string, BOARD_SIZE>, BOARD_SIZE>;
 
-void drawChessboard(sf::RenderWindow& window) {
+void createChessboard(sf::RenderWindow& window) {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             sf::RectangleShape rect(sf::Vector2f(SQUARE_SIZE, SQUARE_SIZE));
@@ -29,14 +29,6 @@ void drawChessboard(sf::RenderWindow& window) {
     }
 }
 
-/*
-* King (Король)
-* Queen (Ферзь/Королева)
-* Rook (Ладья)
-* Bishop (Слон)
-* Knight (Конь)
-* Pawn (Пешка)
-*/
 void setFigures(ChessBoard &chessboard) {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
@@ -70,87 +62,6 @@ void setFigures(ChessBoard &chessboard) {
     }    
 }
 
-// sf::ConvexShape drawKnight(int x, int y, sf::Color color) {
-//     sf::ConvexShape KnightFigure;
-//     KnightFigure.setPointCount(4);
-
-//     KnightFigure.setPoint(0, sf::Vector2f(35.f, 20.f));
-//     KnightFigure.setPoint(1, sf::Vector2f(65.f, 20.f));
-//     KnightFigure.setPoint(2, sf::Vector2f(65.f, 80.f));
-//     KnightFigure.setPoint(3, sf::Vector2f(35.f, 80.f));
-
-//     KnightFigure.setFillColor(color);
-//     KnightFigure.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
-
-//     return KnightFigure;
-// }
-
-sf::ConvexShape drawRook(int x, int y, sf::Color color) {
-    sf::ConvexShape RookFigure;
-    RookFigure.setPointCount(4);
-
-    RookFigure.setPoint(0, sf::Vector2f(25.f, 25.f));
-    RookFigure.setPoint(1, sf::Vector2f(75.f, 25.f));
-    RookFigure.setPoint(2, sf::Vector2f(75.f, 75.f));
-    RookFigure.setPoint(3, sf::Vector2f(25.f, 75.f));
-
-    RookFigure.setFillColor(color);
-    RookFigure.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
-
-    return RookFigure;
-}
-
-sf::ConvexShape drawBishop(int x, int y, sf::Color color) {
-    sf::ConvexShape BishopFigure;
-    BishopFigure.setPointCount(4);
-
-    BishopFigure.setPoint(0, sf::Vector2f(50.f, 25.f));
-    BishopFigure.setPoint(1, sf::Vector2f(75.f, 50.f));
-    BishopFigure.setPoint(2, sf::Vector2f(50.f, 75.f));
-    BishopFigure.setPoint(3, sf::Vector2f(25.f, 50.f));
-
-    BishopFigure.setFillColor(color);
-    BishopFigure.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
-
-    return BishopFigure;
-}
-
-sf::ConvexShape drawKing(int x, int y, sf::Color color) {
-    sf::ConvexShape kingFigure;
-    kingFigure.setPointCount(3);
-
-    kingFigure.setPoint(0, sf::Vector2f(50.f, 75.f));
-    kingFigure.setPoint(1, sf::Vector2f(25.f, 25.f));
-    kingFigure.setPoint(2, sf::Vector2f(75.f, 25.f));
-
-    kingFigure.setFillColor(color);
-    kingFigure.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
-
-    return kingFigure;
-}
-
-sf::ConvexShape drawQueen(int x, int y, sf::Color color) {
-    sf::ConvexShape queenFigure;
-    queenFigure.setPointCount(3);
-
-    queenFigure.setPoint(0, sf::Vector2f(50.f, 25.f));
-    queenFigure.setPoint(1, sf::Vector2f(75.f, 75.f));
-    queenFigure.setPoint(2, sf::Vector2f(25.f, 75.f));
-
-    queenFigure.setFillColor(color);
-    queenFigure.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
-
-    return queenFigure;
-}
-
-sf::CircleShape drawPawn(int x, int y, sf::Color color) {
-    sf::CircleShape circle(SQUARE_SIZE / 4); 
-    circle.setPosition(x * SQUARE_SIZE + SQUARE_SIZE / 4, y * SQUARE_SIZE + SQUARE_SIZE / 4);
-    circle.setFillColor(color);
-
-    return circle;
-}
-
 void eventProcess(sf::RenderWindow& window, ChessBoard &chessboard) {
     sf::Event event;
     while (window.pollEvent(event)) {
@@ -172,33 +83,33 @@ void eventProcess(sf::RenderWindow& window, ChessBoard &chessboard) {
 }
 
 
-void drawCircle(sf::RenderWindow& window, ChessBoard &chessboard) {
+void createCircle(sf::RenderWindow& window, ChessBoard &chessboard) {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             if (chessboard[i][j] == "bPawn") {
-                window.draw(drawPawn(i, j, sf::Color::Black));
+                window.draw(Figures::createPawn(i, j, sf::Color::Black));
             } else if (chessboard[i][j] == "wPawn") {
-                window.draw(drawPawn(i, j, sf::Color::Blue));
+                window.draw(Figures::createPawn(i, j, sf::Color::Blue));
             } else if (chessboard[i][j] == "wKing") {
-                window.draw(drawKing(i, j, sf::Color::Blue));
+                window.draw(Figures::createKing(i, j, sf::Color::Blue));
             } else if (chessboard[i][j] == "bKing") {
-                window.draw(drawKing(i, j, sf::Color::Black));
+                window.draw(Figures::createKing(i, j, sf::Color::Black));
             } else if (chessboard[i][j] == "wQueen") {
-                window.draw(drawQueen(i, j, sf::Color::Blue));
+                window.draw(Figures::createQueen(i, j, sf::Color::Blue));
             } else if (chessboard[i][j] == "bQueen") {
-                window.draw(drawQueen(i, j, sf::Color::Black));
+                window.draw(Figures::createQueen(i, j, sf::Color::Black));
             } else if (chessboard[i][j] == "wRook") {
-                window.draw(drawRook(i, j, sf::Color::Blue));
+                window.draw(Figures::createRook(i, j, sf::Color::Blue));
             } else if (chessboard[i][j] == "bRook") {
-                window.draw(drawRook(i, j, sf::Color::Black));
+                window.draw(Figures::createRook(i, j, sf::Color::Black));
             } else if (chessboard[i][j] == "wBishop") {
-                window.draw(drawBishop(i, j, sf::Color::Blue));
+                window.draw(Figures::createBishop(i, j, sf::Color::Blue));
             } else if (chessboard[i][j] == "bBishop") {
-                window.draw(drawBishop(i, j, sf::Color::Black));
+                window.draw(Figures::createBishop(i, j, sf::Color::Black));
             } else if (chessboard[i][j] == "wKnight") {
-                window.draw(Figures::drawKnight(i, j, sf::Color::Blue));
+                window.draw(Figures::createKnight(i, j, sf::Color::Blue));
             } else if (chessboard[i][j] == "bKnight") {
-                window.draw(Figures::drawKnight(i, j, sf::Color::Black));
+                window.draw(Figures::createKnight(i, j, sf::Color::Black));
             }                                                                            
         }
     }
@@ -216,8 +127,8 @@ int main() {
         
         window.clear();
         
-        drawChessboard(window);
-        drawCircle(window, chessboard);
+        createChessboard(window);
+        createCircle(window, chessboard);
 
         window.display();
 
