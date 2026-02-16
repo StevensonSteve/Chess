@@ -1,6 +1,9 @@
 #pragma once
-
 #include <SFML/Graphics.hpp>
+#include <map>
+#include <string>
+
+using FiguresShapes = std::map <std::string, sf::ConvexShape>;
 
 /*
 * King (Король)
@@ -11,10 +14,12 @@
 * Pawn (Пешка)
 */
 namespace Figures {
-    sf::ConvexShape createKing(int x, int y, sf::Color color);
-    sf::ConvexShape createQueen(int x, int y, sf::Color color);
-    sf::ConvexShape createRook(int x, int y, sf::Color color);
-    sf::ConvexShape createBishop(int x, int y, sf::Color color);
-    sf::ConvexShape createKnight(int x, int y, sf::Color color);
-    sf::CircleShape createPawn(int x, int y, sf::Color color);
+    FiguresShapes init();
+
+    sf::ConvexShape createKing(sf::Color color);
+    sf::ConvexShape createQueen(sf::Color color);
+    sf::ConvexShape createRook(sf::Color color);
+    sf::ConvexShape createBishop(sf::Color color);
+    sf::ConvexShape createKnight(sf::Color color);
+    sf::ConvexShape createPawn(sf::Color color);
 }

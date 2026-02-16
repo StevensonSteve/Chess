@@ -1,10 +1,27 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include <iostream> // это отладочное подключение удалить
 
-#include "constants.hpp"
 #include "figures.hpp"
 
-sf::ConvexShape Figures::createKing(int x, int y, sf::Color color) {
+FiguresShapes Figures::init() {
+    FiguresShapes figures;
+
+    figures["wKing"] = Figures::createKing(sf::Color::Blue);
+    figures["bKing"] = Figures::createKing(sf::Color::Black);
+    figures["wQueen"] = Figures::createQueen(sf::Color::Blue);
+    figures["bQueen"] = Figures::createQueen(sf::Color::Black);
+    figures["wRook"] = Figures::createRook(sf::Color::Blue);
+    figures["bRook"] = Figures::createRook(sf::Color::Black);
+    figures["wBishop"] = Figures::createBishop(sf::Color::Blue);
+    figures["bBishop"] = Figures::createBishop(sf::Color::Black);
+    figures["wKnight"] = Figures::createKnight(sf::Color::Blue);
+    figures["bKnight"] = Figures::createKnight(sf::Color::Black);
+    figures["wPawn"] = Figures::createPawn(sf::Color::Blue);
+    figures["bPawn"] = Figures::createPawn(sf::Color::Black);
+
+    return figures;
+} 
+
+sf::ConvexShape Figures::createKing(sf::Color color) {
     sf::ConvexShape king;
     king.setPointCount(3);
 
@@ -14,12 +31,11 @@ sf::ConvexShape Figures::createKing(int x, int y, sf::Color color) {
     king.setPoint(2, sf::Vector2f(75.f, 25.f));
     
     king.setFillColor(color);
-    // king.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
     
     return king;
 }
 
-sf::ConvexShape Figures::createQueen(int x, int y, sf::Color color) {
+sf::ConvexShape Figures::createQueen(sf::Color color) {
     sf::ConvexShape queen;
     queen.setPointCount(3);
 
@@ -28,12 +44,11 @@ sf::ConvexShape Figures::createQueen(int x, int y, sf::Color color) {
     queen.setPoint(2, sf::Vector2f(25.f, 75.f));
 
     queen.setFillColor(color);
-    // queen.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
 
     return queen;
 }
 
-sf::ConvexShape Figures::createRook(int x, int y, sf::Color color) {
+sf::ConvexShape Figures::createRook(sf::Color color) {
     sf::ConvexShape rook;
     rook.setPointCount(4);
 
@@ -43,12 +58,11 @@ sf::ConvexShape Figures::createRook(int x, int y, sf::Color color) {
     rook.setPoint(3, sf::Vector2f(25.f, 75.f));
 
     rook.setFillColor(color);
-    // rook.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
     
     return rook;
 }
 
-sf::ConvexShape Figures::createBishop(int x, int y, sf::Color color) {
+sf::ConvexShape Figures::createBishop(sf::Color color) {
     sf::ConvexShape bishop;
     bishop.setPointCount(4);
 
@@ -58,29 +72,37 @@ sf::ConvexShape Figures::createBishop(int x, int y, sf::Color color) {
     bishop.setPoint(3, sf::Vector2f(25.f, 50.f));
 
     bishop.setFillColor(color);
-    // bishop.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
     
     return bishop;
 }
 
-sf::ConvexShape Figures::createKnight(int x, int y, sf::Color color) {
+sf::ConvexShape Figures::createKnight(sf::Color color) {
     sf::ConvexShape knight;
-    knight.setPointCount(4);
+    knight.setPointCount(5);
 
-    knight.setPoint(0, sf::Vector2f(35.f, 20.f));
-    knight.setPoint(1, sf::Vector2f(65.f, 20.f));
-    knight.setPoint(2, sf::Vector2f(65.f, 80.f));
-    knight.setPoint(3, sf::Vector2f(35.f, 80.f));
+    knight.setPoint(0, sf::Vector2f(35.f, 80.f));
+    knight.setPoint(1, sf::Vector2f(65.f, 80.f));
+    knight.setPoint(2, sf::Vector2f(65.f, 20.f));
+    knight.setPoint(3, sf::Vector2f(40.f, 20.f));
+    knight.setPoint(4, sf::Vector2f(25.f, 40.f));
 
     knight.setFillColor(color);
-    // knight.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
-
     return knight;
 }
 
-sf::CircleShape Figures::createPawn(int x, int y, sf::Color color) {
-    sf::CircleShape pawn(SQUARE_SIZE / 4); 
-    // pawn.setPosition(x * SQUARE_SIZE + SQUARE_SIZE / 4, y * SQUARE_SIZE + SQUARE_SIZE / 4);
+sf::ConvexShape Figures::createPawn(sf::Color color) {
+    sf::ConvexShape pawn;
+    pawn.setPointCount(8);
+
+    pawn.setPoint(0, sf::Vector2f(40.f, 20.f));
+    pawn.setPoint(1, sf::Vector2f(60.f, 20.f));
+    pawn.setPoint(2, sf::Vector2f(80.f, 40.f));
+    pawn.setPoint(3, sf::Vector2f(80.f, 60.f));
+    pawn.setPoint(4, sf::Vector2f(60.f, 80.f));
+    pawn.setPoint(5, sf::Vector2f(40.f, 80.f));
+    pawn.setPoint(6, sf::Vector2f(20.f, 60.f));
+    pawn.setPoint(7, sf::Vector2f(20.f, 40.f));
+
     pawn.setFillColor(color);
 
     return pawn;
