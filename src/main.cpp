@@ -11,6 +11,7 @@ using namespace std;
 // const int BOARD_SIZE = 8;
 // const float SQUARE_SIZE = 100.f;
 using ChessBoard = array<array<string, BOARD_SIZE>, BOARD_SIZE>;
+using FiguresShapes = map <string, sf::ConvexShape>;
 
 void createChessboard(sf::RenderWindow& window) {
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -83,10 +84,11 @@ void eventProcess(sf::RenderWindow& window, ChessBoard &chessboard) {
 }
 
 
-void createCircle(sf::RenderWindow& window, ChessBoard &chessboard) {
+void createCircle(sf::RenderWindow& window, ChessBoard &chessboard, figuresShapes) {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             if (chessboard[i][j] == "bPawn") {
+                figuresShapes["bPawn"].setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE)
                 window.draw(Figures::createPawn(i, j, sf::Color::Black));
             } else if (chessboard[i][j] == "wPawn") {
                 window.draw(Figures::createPawn(i, j, sf::Color::Blue));
@@ -115,11 +117,33 @@ void createCircle(sf::RenderWindow& window, ChessBoard &chessboard) {
     }
 }
 
+FiguresShapes slojno() {
+    FiguresShapes figures;
+
+    figures["wKing"] = Figures::createKing(i, j, sf::Color::Blue);
+    figures["bKing"] = Figures::createKing(i, j, sf::Color::Black);
+    figures["wQueen"] = Figures::createQueen(i, j, sf::Color::Blue);
+    figures["bQueen"] = Figures::createQueen(i, j, sf::Color::Black);
+    figures["wRook"] = Figures::createRook(i, j, sf::Color::Blue);
+    figures["bRook"] = Figures::createRook(i, j, sf::Color::Black);
+    figures["wBishop"] = Figures::createBishop(i, j, sf::Color::Blue);
+    figures["bBishop"] = Figures::createBishop(i, j, sf::Color::Black);
+    figures["wKnight"] = Figures::createKnight(i, j, sf::Color::Blue);
+    figures["bKnight"] = Figures::createKnight(i, j, sf::Color::Black);
+    figures["wPawn"] = Figures::createPawn(i, j, sf::Color::Blue);
+    figures["bPawn"] = Figures::createPawn(i, j, sf::Color::Black);
+    
+
+} 
+
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Chess Board");
     ChessBoard chessboard;
+    FiguresShapes figuresShapes;
 
     setFigures(chessboard);
+    figuresShapes = slojno();
+    
     
     while (window.isOpen()) {
         
