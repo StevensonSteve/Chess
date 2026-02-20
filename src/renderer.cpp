@@ -20,11 +20,12 @@ void Renderer::drawBoard(sf::RenderWindow& window) {
 void Renderer::drawFigures(sf::RenderWindow& window, ChessBoard &chessboard, FiguresShapes &figuresShapes) {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
-            const std::string& figureName = chessboard[i][j];
+            const Piece& piece = chessboard[i][j];
 
-            if (!figureName.empty()) {
-                figuresShapes[figureName].setPosition(i * SQUARE_SIZE, j * SQUARE_SIZE);
-                window.draw(figuresShapes[figureName]);
+            if (!piece.isEmpty()) {
+                auto key = std::make_pair(piece.side, piece.type);
+                figuresShapes[key].setPosition(i * SQUARE_SIZE, j * SQUARE_SIZE);
+                window.draw(figuresShapes[key]);
             }
         }
     }

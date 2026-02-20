@@ -8,13 +8,14 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Chess Board");
     ChessBoard chessboard;
     FiguresShapes figuresShapes;
+    FigurePosition figurePosition;
 
     Board::init(chessboard);
     figuresShapes = Figures::init();
     
     while (window.isOpen()) {
         
-        Events::process(window, chessboard);
+        Events::process(window, chessboard, figurePosition);
         
         window.clear();
         
@@ -22,7 +23,6 @@ int main() {
         Renderer::drawFigures(window, chessboard, figuresShapes);
 
         window.display();
-
     }
 
     return 0;

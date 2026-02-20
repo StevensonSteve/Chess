@@ -1,22 +1,23 @@
-#include <iostream> // это отладочное подключение удалить
-
 #include "figures.hpp"
+
+namespace {
+    sf::Color renderColor(Side side) {
+        return (side == Side::White) ? sf::Color::Blue : sf::Color::Black;
+    }
+}
 
 FiguresShapes Figures::init() {
     FiguresShapes figures;
 
-    figures["wKing"] = Figures::createKing(sf::Color::Blue);
-    figures["bKing"] = Figures::createKing(sf::Color::Black);
-    figures["wQueen"] = Figures::createQueen(sf::Color::Blue);
-    figures["bQueen"] = Figures::createQueen(sf::Color::Black);
-    figures["wRook"] = Figures::createRook(sf::Color::Blue);
-    figures["bRook"] = Figures::createRook(sf::Color::Black);
-    figures["wBishop"] = Figures::createBishop(sf::Color::Blue);
-    figures["bBishop"] = Figures::createBishop(sf::Color::Black);
-    figures["wKnight"] = Figures::createKnight(sf::Color::Blue);
-    figures["bKnight"] = Figures::createKnight(sf::Color::Black);
-    figures["wPawn"] = Figures::createPawn(sf::Color::Blue);
-    figures["bPawn"] = Figures::createPawn(sf::Color::Black);
+    for (Side side : {Side::White, Side::Black}) {
+        sf::Color color = renderColor(side);
+        figures[{side, PieceType::King}]   = createKing(color);
+        figures[{side, PieceType::Queen}]  = createQueen(color);
+        figures[{side, PieceType::Rook}]   = createRook(color);
+        figures[{side, PieceType::Bishop}] = createBishop(color);
+        figures[{side, PieceType::Knight}] = createKnight(color);
+        figures[{side, PieceType::Pawn}]   = createPawn(color);
+    }
 
     return figures;
 } 
@@ -25,7 +26,6 @@ sf::ConvexShape Figures::createKing(sf::Color color) {
     sf::ConvexShape king;
     king.setPointCount(3);
 
-    std::cout << 12;
     king.setPoint(0, sf::Vector2f(50.f, 75.f));
     king.setPoint(1, sf::Vector2f(25.f, 25.f));
     king.setPoint(2, sf::Vector2f(75.f, 25.f));

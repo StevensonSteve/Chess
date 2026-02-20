@@ -1,9 +1,28 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <map>
-#include <string>
+#include <utility>
 
-using FiguresShapes = std::map <std::string, sf::ConvexShape>;
+enum class Side { None, White, Black };
+enum class PieceType { None, King, Queen, Rook, Bishop, Knight, Pawn };
+
+struct Piece {
+    PieceType type = PieceType::None;
+    Side side = Side::None;
+
+    bool isEmpty() const { return type == PieceType::None; }
+    bool isEnemy(Side other) const { return side != Side::None && side != other; }
+};
+
+using FiguresShapes = std::map<std::pair<Side, PieceType>, sf::ConvexShape>;
+
+struct FigurePosition {
+    int x = -1;
+    int y = -1;
+
+    bool isValid() const { return x >= 0 && y >= 0; }
+    void reset() { x = -1; y = -1; }
+};
 
 /*
 * King (Король)
