@@ -5,17 +5,20 @@ void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePos
     sf::Event event;
 
     while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) 
+        if (event.type == sf::Event::Closed) {
             window.close();
+        }
 
-        if (event.type != sf::Event::MouseButtonPressed || event.mouseButton.button != sf::Mouse::Left)
+        if (event.type != sf::Event::MouseButtonPressed || event.mouseButton.button != sf::Mouse::Left) {
             continue;
+        }
 
         int clickX = event.mouseButton.x / static_cast<int>(SQUARE_SIZE);
         int clickY = event.mouseButton.y / static_cast<int>(SQUARE_SIZE);
 
-        if (clickX < 0 || clickX >= BOARD_SIZE || clickY < 0 || clickY >= BOARD_SIZE)
+        if (clickX < 0 || clickX >= BOARD_SIZE || clickY < 0 || clickY >= BOARD_SIZE) {
             continue;
+        }
 
         if (!activeFigurePosition.isValid()) {
             const Piece& piece = chessboard[clickX][clickY];
