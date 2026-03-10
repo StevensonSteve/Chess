@@ -28,24 +28,107 @@ void Board::init(ChessBoard &chessboard) {
         chessboard[i][6] = {PieceType::Pawn, Side::White};
 }
 
-bool Board::canKingMove(int fromX, int fromY, int toX ,int toY) {
-    return ((fromX - toX) * (fromX - toX) > 1) || ((fromY - toY) * (fromY - toY) > 1);
+bool Board::canMoveKing(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
+    const Piece& king = chessboard[fromX][fromY];
+
+    if (king.type != PieceType::King) {
+        return false;
+    }
+
+    const Piece& target = chessboard[toX][toY];
+
+    return (((fromX - toX) * (fromX - toX) == 1) || ((fromY - toY) * (fromY - toY) == 1))
+        && (target.isEmpty() || target.isEnemy(king.side))
+        && !(target.type == PieceType::King);
 }
 
-bool Board::canRookMove(int fromX, int fromY, int toX ,int toY) {
-    return fromX == toX || fromY == toY;
+bool Board::canMoveQueen(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
+
 }
 
-bool Board::canBishopMove(int fromX, int fromY, int toX ,int toY) {
-    int Y3, X3;
-    X3 = fromX - toX;
-    Y3 = fromY - toY;
-    return std::abs(Y3) - std::abs(X3) == 0;
+bool Board::canMoveRook(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
+    const Piece& rook = chessboard[fromX][fromY];
+
+    if (rook.type != PieceType::Rook) {
+        return false;
+    }
+
+    const Piece& target = chessboard[toX][toY];
+
+    if (fromX != toX && fromY != toY) {
+        return false;
+    }
+
+    if (!target.isEmpty() && !target.isEnemy(rook.side)) {
+        return false;
+    }
+
+    if (toX - fromX == 0) {
+        int delY = (toY > fromY) ? 1 : -1;
+        int curY = fromY + delY;
+
+        while (curY != toY) {
+            if (!chessboard[fromX][curY].isEmpty()) {
+                return false;
+            }
+            curY += delY;
+        }
+    }
+
+    if (toY - fromY == 0) {
+        int delX = (toX > fromX) ? 1 : -1;
+        int curX = fromX + delX;
+
+        while (curX != toX) {
+            if (!chessboard[curX][fromY].isEmpty()) {
+                return false;
+            }
+            curX += delX;
+        }
+    }
+
+    return true;
+}
+
+bool Board::canMoveBishop(const ChessBoard &chessboard, int fromX, int fromY, int toX, int toY) {
+    const Piece& bishop = chessboard[fromX][fromY];
+
+    if (bishop.type != PieceType::Bishop) {
+        return false;
+    }
+
+    if (std::abs(fromX - toX) != std::abs(fromY - toY)) {
+        return false;
+    }
+
+    const Piece& target = chessboard[toX][toY];
+
+    if (!target.isEmpty() && !target.isEnemy(bishop.side)) {
+        return false;
+    }
+
+    int delX = (toX > fromX) ? 1 : -1;
+    int delY = (toY > fromY) ? 1 : -1;
+
+    int curX = fromX + delX;
+    int curY = fromY + delY;
+
+    while (curX != toX && curY != toY) {
+        if (!chessboard[curX][curY].isEmpty()) {
+            return false;
+        }
+        curX += delX;
+        curY += delY;
+    }
+
+    return true;
 }
 
 bool Board::canMovePawn(const ChessBoard &chessboard, int fromX, int fromY, int toX, int toY) {
     const Piece& pawn = chessboard[fromX][fromY];
-    if (pawn.type != PieceType::Pawn) return false;
+    if (pawn.type != PieceType::Pawn) {
+        return false;
+    }
 
     // White moves up (y decreases), Black moves down (y increases)
     const int diraction = (pawn.side == Side::White) ? -1 : 1;
