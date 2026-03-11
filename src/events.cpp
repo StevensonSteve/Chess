@@ -53,7 +53,14 @@ void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePos
                 clickX, clickY
             );
 
-            if (canMoveKing || canMovePawn || canMoveRook || canMoveBishop) {
+
+            bool canMoveQueen = Board::canMoveQueen(
+                chessboard,
+                activeFigurePosition.x, activeFigurePosition.y,
+                clickX, clickY
+            );
+
+            if (canMoveKing || canMovePawn || canMoveRook || canMoveBishop || canMoveQueen) {
                 chessboard[clickX][clickY] = chessboard[activeFigurePosition.x][activeFigurePosition.y];
                 chessboard[activeFigurePosition.x][activeFigurePosition.y] = {};
             }

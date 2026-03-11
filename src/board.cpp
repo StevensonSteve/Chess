@@ -28,38 +28,15 @@ void Board::init(ChessBoard &chessboard) {
         chessboard[i][6] = {PieceType::Pawn, Side::White};
 }
 
-bool Board::canMoveKing(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
-    const Piece& king = chessboard[fromX][fromY];
-
-    if (king.type != PieceType::King) {
-        return false;
-    }
-
-    const Piece& target = chessboard[toX][toY];
-
-    return (((fromX - toX) * (fromX - toX) == 1) || ((fromY - toY) * (fromY - toY) == 1))
-        && (target.isEmpty() || target.isEnemy(king.side))
-        && !(target.type == PieceType::King);
-}
-
-bool Board::canMoveQueen(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
-
-}
-
-bool Board::canMoveRook(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
-    const Piece& rook = chessboard[fromX][fromY];
-
-    if (rook.type != PieceType::Rook) {
-        return false;
-    }
-
+bool straightLineMove(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
+    const Piece& type = chessboard[fromX][fromY];
     const Piece& target = chessboard[toX][toY];
 
     if (fromX != toX && fromY != toY) {
         return false;
     }
 
-    if (!target.isEmpty() && !target.isEnemy(rook.side)) {
+    if (!target.isEmpty() && !target.isEnemy(type.side)) {
         return false;
     }
 
@@ -90,18 +67,13 @@ bool Board::canMoveRook(const ChessBoard &chessboard, int fromX, int fromY, int 
     return true;
 }
 
-bool Board::canMoveBishop(const ChessBoard &chessboard, int fromX, int fromY, int toX, int toY) {
+bool diagonalMove(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
     const Piece& bishop = chessboard[fromX][fromY];
-
-    if (bishop.type != PieceType::Bishop) {
-        return false;
-    }
+    const Piece& target = chessboard[toX][toY];
 
     if (std::abs(fromX - toX) != std::abs(fromY - toY)) {
         return false;
     }
-
-    const Piece& target = chessboard[toX][toY];
 
     if (!target.isEmpty() && !target.isEnemy(bishop.side)) {
         return false;
@@ -124,13 +96,57 @@ bool Board::canMoveBishop(const ChessBoard &chessboard, int fromX, int fromY, in
     return true;
 }
 
+bool Board::canMoveKing(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
+    const Piece& king = chessboard[fromX][fromY];
+
+    if (king.type != PieceType::King) {
+        return false;
+    }
+
+    const Piece& target = chessboard[toX][toY];
+
+    return (((fromX - toX) * (fromX - toX) == 1) || ((fromY - toY) * (fromY - toY) == 1))
+        && (target.isEmpty() || target.isEnemy(king.side))
+        && !(target.type == PieceType::King);
+}
+
+bool Board::canMoveQueen(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
+    const Piece& queen = chessboard[fromX][fromY];
+
+    if (queen.type != PieceType::Queen) {
+        return false;
+    }
+
+    return straightLineMove(chessboard, fromX, fromY, toX , toY)
+        || diagonalMove(chessboard, fromX, fromY, toX, toY);
+}
+
+bool Board::canMoveRook(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
+    const Piece& rook = chessboard[fromX][fromY];
+
+    if (rook.type != PieceType::Rook) {
+        return false;
+    }
+
+    return straightLineMove(chessboard, fromX, fromY, toX , toY);
+}
+
+bool Board::canMoveBishop(const ChessBoard &chessboard, int fromX, int fromY, int toX, int toY) {
+    const Piece& bishop = chessboard[fromX][fromY];
+
+    if (bishop.type != PieceType::Bishop) {
+        return false;
+    }
+
+    return diagonalMove(chessboard, fromX, fromY, toX, toY);
+}
+
 bool Board::canMovePawn(const ChessBoard &chessboard, int fromX, int fromY, int toX, int toY) {
     const Piece& pawn = chessboard[fromX][fromY];
     if (pawn.type != PieceType::Pawn) {
         return false;
     }
 
-    // White moves up (y decreases), Black moves down (y increases)
     const int diraction = (pawn.side == Side::White) ? -1 : 1;
     const int startY = (pawn.side == Side::White) ? 6 : 1;
     const Piece& target = chessboard[toX][toY];

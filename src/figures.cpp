@@ -50,36 +50,28 @@ sf::ConvexShape Figures::createQueen(sf::Color color) {
 
 sf::ConvexShape Figures::createRook(sf::Color color) {
     sf::ConvexShape rook;
-    // 16 точек: 3 зубца (по 2 точки сверху + выемки) + бока и основание
     rook.setPointCount(16);
 
-    // --- ЗУБЦЫ (Верхняя часть) ---
-    // Левый зубец
     rook.setPoint(0,  sf::Vector2f(30.f, 20.f));
     rook.setPoint(1,  sf::Vector2f(38.f, 20.f));
-    rook.setPoint(2,  sf::Vector2f(38.f, 30.f)); // Спуск первой выемки
+    rook.setPoint(2,  sf::Vector2f(38.f, 30.f));
 
-    // Средний зубец
-    rook.setPoint(3,  sf::Vector2f(46.f, 30.f)); // Дно первой выемки
-    rook.setPoint(4,  sf::Vector2f(46.f, 20.f)); // Подъем на средний зубец
-    rook.setPoint(5,  sf::Vector2f(54.f, 20.f)); // Верх среднего зубца
-    rook.setPoint(6,  sf::Vector2f(54.f, 30.f)); // Спуск второй выемки
+    rook.setPoint(3,  sf::Vector2f(46.f, 30.f));
+    rook.setPoint(4,  sf::Vector2f(46.f, 20.f));
+    rook.setPoint(5,  sf::Vector2f(54.f, 20.f));
+    rook.setPoint(6,  sf::Vector2f(54.f, 30.f));
 
-    // Правый зубец
-    rook.setPoint(7,  sf::Vector2f(62.f, 30.f)); // Дно второй выемки
-    rook.setPoint(8,  sf::Vector2f(62.f, 20.f)); // Подъем на правый зубец
-    rook.setPoint(9,  sf::Vector2f(70.f, 20.f)); // Верх правого зубца
+    rook.setPoint(7,  sf::Vector2f(62.f, 30.f));
+    rook.setPoint(8,  sf::Vector2f(62.f, 20.f));
+    rook.setPoint(9,  sf::Vector2f(70.f, 20.f));
 
-    // --- КОРПУС И ОСНОВАНИЕ ---
-    // Правая сторона
-    rook.setPoint(10, sf::Vector2f(70.f, 70.f)); // Плечо (ровно под правым зубцом)
-    rook.setPoint(11, sf::Vector2f(75.f, 70.f)); // Расширение основания
-    rook.setPoint(12, sf::Vector2f(75.f, 80.f)); // Низ право
+    rook.setPoint(10, sf::Vector2f(70.f, 70.f));
+    rook.setPoint(11, sf::Vector2f(75.f, 70.f));
+    rook.setPoint(12, sf::Vector2f(75.f, 80.f));
 
-    // Левая сторона
-    rook.setPoint(13, sf::Vector2f(25.f, 80.f)); // Низ лево
-    rook.setPoint(14, sf::Vector2f(25.f, 70.f)); // Расширение основания
-    rook.setPoint(15, sf::Vector2f(30.f, 70.f)); // Плечо (ровно под левым зубцом)
+    rook.setPoint(13, sf::Vector2f(25.f, 80.f));
+    rook.setPoint(14, sf::Vector2f(25.f, 70.f));
+    rook.setPoint(15, sf::Vector2f(30.f, 70.f));
 
     rook.setFillColor(color);
     
@@ -88,15 +80,21 @@ sf::ConvexShape Figures::createRook(sf::Color color) {
 
 sf::ConvexShape Figures::createBishop(sf::Color color) {
     sf::ConvexShape bishop;
-    bishop.setPointCount(4);
+    bishop.setPointCount(10); 
 
-    bishop.setPoint(0, sf::Vector2f(50.f, 25.f));
-    bishop.setPoint(1, sf::Vector2f(75.f, 50.f));
-    bishop.setPoint(2, sf::Vector2f(50.f, 75.f));
-    bishop.setPoint(3, sf::Vector2f(25.f, 50.f));
+    bishop.setPoint(0, sf::Vector2f(50.f, 10.f));
+    bishop.setPoint(1, sf::Vector2f(65.f, 35.f));
+    bishop.setPoint(2, sf::Vector2f(55.f, 45.f));
+    bishop.setPoint(3, sf::Vector2f(75.f, 80.f));
+    bishop.setPoint(4, sf::Vector2f(75.f, 90.f));
+
+    bishop.setPoint(5, sf::Vector2f(25.f, 90.f));
+    bishop.setPoint(6, sf::Vector2f(25.f, 80.f));
+    bishop.setPoint(7, sf::Vector2f(45.f, 45.f));
+    bishop.setPoint(8, sf::Vector2f(35.f, 35.f));
+    bishop.setPoint(9, sf::Vector2f(50.f, 10.f));
 
     bishop.setFillColor(color);
-    
     return bishop;
 }
 
