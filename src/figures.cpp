@@ -100,17 +100,32 @@ sf::ConvexShape Figures::createBishop(sf::Color color) {
 
 sf::ConvexShape Figures::createKnight(sf::Color color) {
     sf::ConvexShape knight;
-    knight.setPointCount(5);
+    knight.setPointCount(15); 
 
-    knight.setPoint(0, sf::Vector2f(35.f, 80.f));
-    knight.setPoint(1, sf::Vector2f(65.f, 80.f));
-    knight.setPoint(2, sf::Vector2f(65.f, 20.f));
-    knight.setPoint(3, sf::Vector2f(40.f, 20.f));
-    knight.setPoint(4, sf::Vector2f(25.f, 40.f));
+    knight.setPoint(0,  sf::Vector2f(25.f, 90.f));
+    knight.setPoint(1,  sf::Vector2f(75.f, 90.f));
+    knight.setPoint(2,  sf::Vector2f(75.f, 82.f));
+
+    knight.setPoint(3,  sf::Vector2f(65.f, 70.f));
+    knight.setPoint(4,  sf::Vector2f(68.f, 40.f));
+    knight.setPoint(5,  sf::Vector2f(60.f, 15.f));
+    
+    knight.setPoint(6,  sf::Vector2f(50.f, 25.f));
+    knight.setPoint(7,  sf::Vector2f(45.f, 18.f));
+    knight.setPoint(8,  sf::Vector2f(35.f, 28.f));
+    knight.setPoint(9,  sf::Vector2f(15.f, 45.f));
+    knight.setPoint(10, sf::Vector2f(20.f, 55.f));
+    knight.setPoint(11, sf::Vector2f(35.f, 52.f));
+
+    knight.setPoint(12, sf::Vector2f(45.f, 65.f));
+    knight.setPoint(13, sf::Vector2f(35.f, 82.f));
+    knight.setPoint(14, sf::Vector2f(25.f, 82.f));
 
     knight.setFillColor(color);
+
     return knight;
 }
+
 
 sf::ConvexShape Figures::createPawn(sf::Color color) {
     sf::ConvexShape pawn;

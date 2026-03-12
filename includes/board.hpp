@@ -12,5 +12,6 @@ namespace Board {
     bool canMoveQueen(const ChessBoard &chessboard, int fromX, int fromY, int toX, int toY);
     bool canMoveRook(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY);
     bool canMoveBishop(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY);
+    bool canMoveKnight(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY);
     bool canMovePawn(const ChessBoard &chessboard, int fromX, int fromY, int toX, int toY);
 }

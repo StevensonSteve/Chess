@@ -141,6 +141,19 @@ bool Board::canMoveBishop(const ChessBoard &chessboard, int fromX, int fromY, in
     return diagonalMove(chessboard, fromX, fromY, toX, toY);
 }
 
+bool Board::canMoveKnight(const ChessBoard &chessboard, int fromX, int fromY, int toX ,int toY) {
+    const Piece& knight = chessboard[fromX][fromY];
+
+    if (knight.type != PieceType::Knight) {
+        return false;
+    }
+
+    const Piece& target = chessboard[toX][toY];
+
+    return ((std::abs(fromY - toY) == 2 &&  std::abs(fromX - toX) == 1) || (std::abs(fromY - toY) == 1 && std::abs(fromX - toX) == 2))
+        && (target.isEmpty() || target.isEnemy(knight.side));
+}
+
 bool Board::canMovePawn(const ChessBoard &chessboard, int fromX, int fromY, int toX, int toY) {
     const Piece& pawn = chessboard[fromX][fromY];
     if (pawn.type != PieceType::Pawn) {

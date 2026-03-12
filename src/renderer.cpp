@@ -17,6 +17,14 @@ void Renderer::drawBoard(sf::RenderWindow& window) {
     }
 }
 
+void Renderer::highlightActiveCell(sf::RenderWindow& window, int x, int y) {
+    sf::RectangleShape rect(sf::Vector2f(SQUARE_SIZE, SQUARE_SIZE));
+    rect.setPosition(x * SQUARE_SIZE, y * SQUARE_SIZE);
+    rect.setFillColor(sf::Color::Red);
+
+    window.draw(rect); 
+}
+
 void Renderer::drawFigures(sf::RenderWindow& window, ChessBoard &chessboard, FiguresShapes &figuresShapes) {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {

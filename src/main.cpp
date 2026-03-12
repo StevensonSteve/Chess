@@ -20,6 +20,7 @@ int main() {
         window.clear();
         
         Renderer::drawBoard(window);
+        Renderer::highlightActiveCell(window, figurePosition.x, figurePosition.y);
         Renderer::drawFigures(window, chessboard, figuresShapes);
 
         window.display();

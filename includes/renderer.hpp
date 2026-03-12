@@ -7,4 +7,5 @@
 namespace Renderer {
     void drawBoard(sf::RenderWindow& window);
     void drawFigures(sf::RenderWindow& window, ChessBoard &chessboard, FiguresShapes &figuresShapes);
+    void highlightActiveCell(sf::RenderWindow& window,int x,int y);
 }

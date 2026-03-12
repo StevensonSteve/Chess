@@ -33,8 +33,6 @@ void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePos
                 clickX, clickY
             );
 
-            // std::cout << "canMove: " << canMove << std::endl;
-
             bool canMovePawn = Board::canMovePawn(
                 chessboard,
                 activeFigurePosition.x, activeFigurePosition.y,
@@ -60,7 +58,13 @@ void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePos
                 clickX, clickY
             );
 
-            if (canMoveKing || canMovePawn || canMoveRook || canMoveBishop || canMoveQueen) {
+            bool canMoveKnight = Board::canMoveKnight(
+                chessboard,
+                activeFigurePosition.x, activeFigurePosition.y,
+                clickX, clickY
+            );
+
+            if (canMoveKing || canMovePawn || canMoveRook || canMoveBishop || canMoveQueen || canMoveKnight) {
                 chessboard[clickX][clickY] = chessboard[activeFigurePosition.x][activeFigurePosition.y];
                 chessboard[activeFigurePosition.x][activeFigurePosition.y] = {};
             }
