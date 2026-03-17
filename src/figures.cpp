@@ -20,16 +20,37 @@ FiguresShapes Figures::init() {
     }
 
     return figures;
-} 
+}
 
 sf::ConvexShape Figures::createKing(sf::Color color) {
     sf::ConvexShape king;
-    king.setPointCount(3);
 
-    king.setPoint(0, sf::Vector2f(50.f, 75.f));
-    king.setPoint(1, sf::Vector2f(25.f, 25.f));
-    king.setPoint(2, sf::Vector2f(75.f, 25.f));
-    
+    king.setPointCount(22); 
+
+    king.setPoint(0, sf::Vector2f(65.f, 25.f));
+    king.setPoint(1, sf::Vector2f(65.f, 35.f));
+    king.setPoint(2, sf::Vector2f(55.f, 45.f));
+    king.setPoint(3, sf::Vector2f(75.f, 80.f));
+    king.setPoint(4, sf::Vector2f(75.f, 90.f));
+
+    king.setPoint(5, sf::Vector2f(25.f, 90.f));
+    king.setPoint(6, sf::Vector2f(25.f, 80.f));
+    king.setPoint(7, sf::Vector2f(45.f, 45.f));
+    king.setPoint(8, sf::Vector2f(35.f, 35.f));
+    king.setPoint(9, sf::Vector2f(35.f, 25.f));
+    king.setPoint(10, sf::Vector2f(47.f, 25.f));
+    king.setPoint(11, sf::Vector2f(47.f, 20.f));
+    king.setPoint(12, sf::Vector2f(42.f, 20.f));
+    king.setPoint(13, sf::Vector2f(42.f, 15.f));
+    king.setPoint(14, sf::Vector2f(47.f, 15.f));
+    king.setPoint(15, sf::Vector2f(47.f, 10.f));
+    king.setPoint(16, sf::Vector2f(53.f, 10.f));
+    king.setPoint(17, sf::Vector2f(53.f, 15.f));
+    king.setPoint(18, sf::Vector2f(58.f, 15.f));
+    king.setPoint(19, sf::Vector2f(58.f, 20.f));
+    king.setPoint(20, sf::Vector2f(53.f, 20.f));
+    king.setPoint(21, sf::Vector2f(53.f, 25.f));
+
     king.setFillColor(color);
     
     return king;
