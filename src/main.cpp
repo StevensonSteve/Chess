@@ -1,223 +1,83 @@
 #include <iostream>
 
-// struct Complex {
-//     int real;
-//     int img;
-// };
-
-// struct Point {
-//     Complex x;
-//     Complex y;
-// };
-
-// void test(Point& point) {
-//     point.x.img = 1;
-//     point.x.real = 1;
-//     point.y.real = 3;
-//     point.y.img = 3;
-// }
-
-// void test2(int& test) {
-//        test += 1; 
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// void sumTraengularSides1(int x1, int x2, int x3, int y1, int y2, int y3) {
-//     // sum
-//     int sum = int x1, int x2, int x3, int y1, int y2, int y3
-// }
-
-// struct Point {
-//     int x;
-//     int y;
-// };
-
-// void sumTraengularSides1(Point p1, Point p2, Point p3) {
-//     // sum
-//     int sum = p1.x + p1.y + p2.x + p3.y;
-// }
-
-// struct Traengular {
-//     Point p1;
-//     Point p2;
-//     Point p3;
-// };
-
-
-// void sumTraengularSides3(Traengular t) {
-//     // sum
-// }
-
-
-// void squareTraengular1Traengular2(Traengular t1, Traengular t2) {
-//     // sum
-//     t1.p1.x + 
-// }
-
-
-
-
-
-
-
-
-
-
-// void printUserData(User user) {
-
-//     // User : Ivanov Ivan Tetrovich
-//     // Age: 12 yeas
-//     // Departmet: 
-//     std::cout << user.name << std::endl;
-// }
-
-
-
-
-
-
-
-
-
-
-// enum class Departmet { None, IT, Transpotr, Shop };
-
-
-// struct  User {
-//     int ID = 1232;
-//     std::string name = "";
-//     std::string secondName = "";
-//     std::string patronomic = "";
-//     int age = 12;
-//     std::string sex = "";
-//     Departmet departmet = Departmet::None;
-
-//     int getAge() const {
-//         return age;
-//     }
-
-
-// };
-
-
-
-
-
-
-// enum class Side { None, White, Black };
-// enum class PieceType { None, King, Queen, Rook, Bishop, Knight, Pawn };
-
-// struct Piece {
-//     PieceType type = PieceType::None;
-//     Side side = Side::None;
-//     int age = 0;
-//     Departmet departmet = Departmet::None;
-
-//     bool isEmpty() const { 
-//         return type == PieceType::None; 
-//     }
-
-//     bool isEnemy(Side other) const { 
-//         return side != Side::None && side != other; 
-//     }
-// };
-
-enum class Model {None, Audi, BMW, Mercedes, Volvo, Volkswagen};
-
-enum class Currency {None, USD, FR, EUR};
-
-struct Price {
-    int dollars = 0;
-    int cents = 0;
-    Currency currency = Currency::None;
-
-    Price(int d, int c, Currency curr) {
-        dollars = d + c / 100;
-        cents = c % 100;
-        currency = curr;
-    }
-
-    Price() = default;
-
-    std::string currencyToString(Currency currency) {
-        // std::cout << "-------------------" << currency << std::endl;
-        switch (currency) {
-            case Currency::USD: return "USD";
-            case Currency::FR: return "FR";
-            case Currency::EUR: return "EUR";
-            
-            default: return "None";
-        }
-    }
-};
-
-struct Car {
-    int milage = 0;
-    Model model = Model::None;
-    Price price = {
-        0,
-        0,
-        Currency::None,
-    };
-};
-
-
-
-std::string modelToString(Model model) {
-    switch (model) {
-        case Model::Audi: return "Audi";
-        case Model::Mercedes: return "Mercedes";
-        case Model::Volkswagen: return "Volkswagen";
-        case Model::Volvo: return "Volvo";
-        case Model::BMW: return "BMW";
+enum class Work { None, Teatcher, Student };
+enum class Sex { None, Male, Female };
+
+std::string SexToString(Sex sex) {
+    switch (sex) {
+        case Sex::Male: return "Male";
+        case Sex::Female: return "Female";
         
         default: return "None";
     }
-}
+};
 
-void carCard(Car car) {
-    std::cout << "Model: " << modelToString(car.model) << std::endl;
-    std::cout << "Milage: " << car.milage << std::endl;
-    std::cout << "Price: " << car.price.dollars << "." << car.price.cents << " " << car.price.currencyToString(car.price.currency) << std::endl;
-}
+std::string WorkToString(Work work) {
+    switch (work) {
+        case Work::Teatcher: return "Teatcher";
+        case Work::Student: return "Student";
+        
+        default: return "None";
+    }
+};
 
+struct Person {
+    std::string name = "";
+    std::string secondName = "";
+    std::string patronymic = "";
+    int age = 0;
+    Sex sex = Sex::None;
+    Work work = Work::None;
+
+    void personalCard() const {
+        std::cout << "Name: " << name << std::endl;
+        std::cout << "Second name: " << secondName << std::endl;
+        std::cout << "Patronymic: " << patronymic << std::endl;
+        std::cout << "Age: " << age << std::endl;
+        std::cout << "Sex: " << SexToString(sex) << std::endl;
+        std::cout << "Work: " << WorkToString(work) << std::endl;
+    }
+};
+
+struct Teacher : public Person {
+    std::string subject = ""; 
+    int experience = 0;
+
+    void personalCard() const {
+        Person::personalCard();
+        std::cout << "Subject: " << subject << std::endl;
+        std::cout << "Experience: " << experience << std::endl;
+    }
+};
 
 
 int main() {  
 
-Car mercedes = {
-    .milage = 67529,
-    .model = Model::Mercedes,
-    .price = { 
-        71203, 
-        246,
-        Currency::USD
-    },
-};
+    Person User1 = {
+        .name = "Steven",
+        .secondName = "Alex",
+        .patronymic = "Stevenson",
+        .age = 14,
+        .sex = Sex::Male,
+        .work = Work::Student
+    };
 
-    // User teacher = {
-    //     .name = "Sofia",
-    //     .secondName = "Ivanova",
-    //     .patronomic = "Petrovna",
-    //     .age = 25,
-    //     .sex = "Female",
-    //     .departmet = "Biology"
-    // };
+    Teacher teacher = {
+        {
+            .name = "Steven",
+            .secondName = "Alex",
+            .patronymic = "Stevenson",
+            .age = 14,
+            .sex = Sex::Male,
+            .work = Work::Student 
+        },
+        .subject = "English",
+        .experience = 5
+    };
 
-    carCard(mercedes);
+    User1.personalCard();
+    std::cout << "****************************************" << std::endl;
+    teacher.personalCard();
 
     return 0;
 }
