@@ -1,8 +1,17 @@
-#include "events.hpp"
 #include <iostream>
 
-void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePosition& activeFigurePosition, Side& currentTurn) {
+#include "events.hpp"
+#include "history.hpp"
+
+void Events::process(
+    sf::RenderWindow& window, 
+    ChessBoard& chessboard, 
+    FigurePosition& activeFigurePosition, 
+    Side& currentTurn, 
+    std::vector<Move>& moveHistory
+) {
     sf::Event event;
+    Move currentMove;
 
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
@@ -26,6 +35,7 @@ void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePos
                 activeFigurePosition.x = clickX;
                 activeFigurePosition.y = clickY;
             }
+            currentMove.piece = piece;
         } else {
             bool canMoveKing = Board::canMoveKing(
                 chessboard,
@@ -65,9 +75,21 @@ void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePos
             );
 
             if (canMoveKing || canMovePawn || canMoveRook || canMoveBishop || canMoveQueen || canMoveKnight) {
+                currentMove.from.x = activeFigurePosition.x;
+                currentMove.from.y = activeFigurePosition.y;
+                currentMove.to.x = clickX;
+                currentMove.to.y = clickY;
                 chessboard[clickX][clickY] = chessboard[activeFigurePosition.x][activeFigurePosition.y];
                 chessboard[activeFigurePosition.x][activeFigurePosition.y] = {};
                 currentTurn = (currentTurn == Side::White) ? Side::Black : Side::White;
+                // std::cout << "from: (" << currentMove.from.x + 1 << ";" << currentMove.from.y + 1 << ") | " 
+                // << "to: (" << currentMove.to.x + 1 << ";" << currentMove.to.y + 1 << ")" << std::endl;
+                moveHistory.push_back(currentMove);
+            }
+            for (const auto& move : moveHistory) {
+                std::cout << " From: " << move.from.x << "," << move.from.y 
+                        << " To: " << move.to.x << "," << move.to.y 
+                        << std::endl;
             }
 
             activeFigurePosition.reset();

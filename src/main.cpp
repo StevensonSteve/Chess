@@ -3,21 +3,28 @@
 #include "figures.hpp"
 #include "renderer.hpp"
 #include "events.hpp"
+#include "history.hpp"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Chess Board");
     ChessBoard chessboard;
     FiguresShapes figuresShapes;
     FigurePosition figurePosition;
+    Side currentTurn = Side::White;
+    std::vector<Move> moveHistory;
 
     Board::init(chessboard);
     figuresShapes = Figures::init();
-    
-    Side currentTurn = Side::White;
 
     while (window.isOpen()) {
         
-        Events::process(window, chessboard, figurePosition, currentTurn);
+        Events::process(
+            window, 
+            chessboard, 
+            figurePosition, 
+            currentTurn, 
+            moveHistory
+        );
         
         window.clear();
         
