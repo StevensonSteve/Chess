@@ -4,5 +4,5 @@
 #include "board.hpp"
 
 namespace Events {
-    void process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePosition& figurePosition);
+    void process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePosition& figurePosition, Side& currentTurn);
 }

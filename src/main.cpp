@@ -13,9 +13,11 @@ int main() {
     Board::init(chessboard);
     figuresShapes = Figures::init();
     
+    Side currentTurn = Side::White;
+
     while (window.isOpen()) {
         
-        Events::process(window, chessboard, figurePosition);
+        Events::process(window, chessboard, figurePosition, currentTurn);
         
         window.clear();
         

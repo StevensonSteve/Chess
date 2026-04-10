@@ -1,7 +1,7 @@
 #include "events.hpp"
 #include <iostream>
 
-void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePosition& activeFigurePosition) {
+void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePosition& activeFigurePosition, Side& currentTurn) {
     sf::Event event;
 
     while (window.pollEvent(event)) {
@@ -22,7 +22,7 @@ void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePos
 
         if (!activeFigurePosition.isValid()) {
             const Piece& piece = chessboard[clickX][clickY];
-            if (!piece.isEmpty()) {
+            if (!piece.isEmpty() && piece.side == currentTurn) {
                 activeFigurePosition.x = clickX;
                 activeFigurePosition.y = clickY;
             }
@@ -67,6 +67,7 @@ void Events::process(sf::RenderWindow& window, ChessBoard& chessboard, FigurePos
             if (canMoveKing || canMovePawn || canMoveRook || canMoveBishop || canMoveQueen || canMoveKnight) {
                 chessboard[clickX][clickY] = chessboard[activeFigurePosition.x][activeFigurePosition.y];
                 chessboard[activeFigurePosition.x][activeFigurePosition.y] = {};
+                currentTurn = (currentTurn == Side::White) ? Side::Black : Side::White;
             }
 
             activeFigurePosition.reset();

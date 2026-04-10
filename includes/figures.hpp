@@ -20,7 +20,7 @@ struct FigurePosition {
     int x = -1;
     int y = -1;
 
-    bool isValid() const { return x >= 0 && y >= 0; }
+    bool isValid() const { return x >= 0 && y >= 0; } // todo add && <= 7
     void reset() { x = -1; y = -1; }
 };
 
